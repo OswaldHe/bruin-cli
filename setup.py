@@ -16,7 +16,7 @@ install_requires = [x.strip() for x in all_reqs if ('git+' not in x) and (not x.
 setup(
     name='bruin',
     description="Command line tool made by python for various toolbox used in UCLA",
-    version="0.1.0",
+    version="0.1.1",
     packages=find_packages(),
     python_requires='>=3.6',
     entry_points='''
