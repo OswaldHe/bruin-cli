@@ -10,8 +10,18 @@ pip install bruin
 
 ## Simple Usages:
 
+### Meal
 Print today's dining menu
 
 ```sh
 bruin meal
+```
+Print hour of operations:
+```sh
+bruin meal --hour=['', 'all', 'De Neve', etc.]
+```
+
+Print detail menu:
+```sh
+bruin meal --detail=['Breakfast', 'Lunch', 'Dinner']
 ```
