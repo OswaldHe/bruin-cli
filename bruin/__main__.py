@@ -1,11 +1,13 @@
 import argparse
 from bruin.meal import print_menu_all, print_hour, print_menu_detail_all, Period
+from bruin.calendar_tool import print_events_today
 
 parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
 
 parser.add_argument("option", type=str, help=
     "Tools that can be used in this cli, including:\n\n\
-meal: print today's menu for each dining hall."
+meal: print today's menu for each dining hall.\n \
+calendar: print incoming events/classes today."
 )
 
 parser.add_argument(
@@ -39,6 +41,9 @@ def main():
                 parser.print_help()
         else:
             print_menu_all()
+    elif args.option == "calendar":
+        print("Reminder: Please import your calendar data into your Google Calendar!\n")
+        print_events_today()
     else:
         parser.print_help()
 

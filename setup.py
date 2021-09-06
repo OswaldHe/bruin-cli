@@ -1,7 +1,6 @@
 from setuptools import setup, find_packages
 from io import open
 from os import path
-
 import pathlib
 
 CURDIRT = pathlib.Path(__file__).parent
@@ -17,7 +16,7 @@ dependency_links = [x.strip().replace('git+', '') for x in all_reqs if 'git+' no
 setup(
     name='bruin',
     description="Command line tool made by python for various toolbox used in UCLA",
-    version="0.1.4",
+    version="0.2.1",
     packages=find_packages(),
     install_requires=install_requires,
     python_requires='>=3.6',
@@ -25,6 +24,7 @@ setup(
         [console_scripts]
         bruin=bruin.__main__:main
     ''',
+    include_package_data=True,
     dependency_links=dependency_links,
     license='MIT',
     author='Oswald He',

@@ -4,6 +4,8 @@ A toolbox for UCLA students in various events
 
 Project published on PyPi: https://pypi.org/project/bruin/
 
+Author: Oswald He <zifanhe1202@g.ucla.edu>
+
 ## Installation:
 ```sh
 pip install bruin
@@ -31,8 +33,17 @@ Print detail menu:
 bruin meal --detail=['Breakfast', 'Lunch', 'Dinner']
 ```
 
+### Calendar
+Print today's events/classes
+```sh
+bruin calendar
+```
+
 ## Troubleshooting
 
 1. *Cannot find certain packages*: Make sure you install Python 3.6 or higher and use it throughout your system.
 2. *ModuleError: No module <module_name>*: Check whether the path you are running python is the same as where `pip` install all the dependencies. The root should be in the output log when you run either commands.
+
+## Contribute
+You can directly create a PR on a branch, but please create an issue first and after we talked about whether this improvement is needed, you can start your development.
    
