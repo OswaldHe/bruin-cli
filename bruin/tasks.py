@@ -28,7 +28,7 @@ def read_tasks_and_print():
         print("\nReviews: ")
         _print_list(review_list)
 
-def add_task(name: str, deadline: str, subject: str):
+def _add_task(name: str, deadline: str, subject: str):
     data = {
         "todo": [],
         "review": []
@@ -53,7 +53,65 @@ def add_task_from_input():
         subject = "Misc"
     deadline = input("When should you finish it: ")
 
-    add_task(name, deadline, subject)
+    _add_task(name, deadline, subject)
 
     print("Task added!")
 
+def complete_task(index: int):
+    if not _TASK_FILE.is_file():
+        print("You don't have a task yet.")
+    else:
+        data = {}
+        with open(_TASK_FILE) as json_file:
+            data = json.load(json_file)
+        todo_list : list = data['todo']
+        if len(todo_list) >= index:
+            data['review'].append(todo_list.pop(index-1))
+            with open(_TASK_FILE, 'w') as json_file:
+                json.dump(data, json_file)
+            print("Task completed and wait for review later.")
+        else:
+            print("You typed a wrong task index")
+
+def _terminate_task(type: str, index: int):
+    if not _TASK_FILE.is_file():
+        print("You don't have a task yet.")
+    else:
+        data = {}
+        with open(_TASK_FILE) as json_file:
+            data = json.load(json_file)
+
+        if type in data:
+            task_list = data[type]
+            if len(task_list) >= index:
+                task_list.pop(index-1)
+                with open(_TASK_FILE, 'w') as json_file:
+                    json.dump(data, json_file)
+                print("Task closed.")
+            else:
+                print("You typed a wrong task index")
+        else:
+            print("You can only close task from either TODO or REVIEW bucket.")
+
+def _validate_index_string(index_string: str) -> bool:
+    '''
+    a string should be in format 't{%d}' or 'r{%d}'
+    '''
+    if len(index_string) < 2:
+        print("Invalid index string length!")
+        return False
+    elif index_string[0] != 't' and index_string[0] != 'r':
+        print("Invalid index string prefix!")
+        return False
+    elif not index_string[1:].isnumeric():
+        print("Index need to have a number suffix!")
+        return False
+    else:
+        return True
+
+def terminate_task_by_string(index_string: str):
+    
+    if _validate_index_string(index_string):
+        list_type = 'todo' if index_string[0] == 't' else 'review'
+        index = int(index_string[1:])
+        _terminate_task(list_type, index)
