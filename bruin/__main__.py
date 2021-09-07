@@ -8,7 +8,8 @@ parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument("option", type=str, help=
     "Tools that can be used in this cli, including:\n\n\
 meal: print today's menu for each dining hall.\n \
-calendar: print incoming events/classes today."
+calendar: print incoming events/classes today.\n \
+tasks: Add and organize your daily tasks."
 )
 
 parser.add_argument(
@@ -21,6 +22,7 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "-d",
     "--detail", 
     type=str, 
     dest='detail', 
@@ -30,6 +32,7 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "-a",
     "--add",
     dest='add',
     action='store_true',
@@ -38,6 +41,7 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "-c",
     "--complete",
     dest='complete',
     action='store',
@@ -47,6 +51,7 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "-t",
     "--terminate",
     dest='terminate',
     action='store',

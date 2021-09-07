@@ -1,5 +1,7 @@
 import json
 from pathlib import Path
+from datetime import datetime
+from termcolor import colored, cprint
 
 _CURDIRT = Path(__file__).parent
 _TASK_FILE = _CURDIRT / 'tasks.json'
@@ -10,7 +12,14 @@ def _print_list(task_list : list):
         name = item['name']
         subject = item['subject']
         deadline = item['deadline']
-        print(f'{i+1}. {name}({subject}) - {deadline}')
+        log_string = f'{i+1}. {name}({subject}) - {deadline}'
+        date_obj = datetime.strptime(deadline, '%Y-%m-%d').date()
+        if date_obj == datetime.today().date():
+            print(colored(log_string, 'red', attrs=['bold']))
+        else:
+            print(log_string)
+
+    print("")
 
 def read_tasks_and_print():
     if not _TASK_FILE.is_file():
@@ -22,10 +31,10 @@ def read_tasks_and_print():
         todo_list = task_dict['todo']
         review_list = task_dict['review']
 
-        print("Todos: ")
+        cprint("Todos:", 'grey', 'on_yellow', end='\n')
         _print_list(todo_list)
         
-        print("\nReviews: ")
+        cprint("Reviews:", 'white', 'on_blue', end='\n')
         _print_list(review_list)
 
 def _add_task(name: str, deadline: str, subject: str):
@@ -52,6 +61,11 @@ def add_task_from_input():
     if subject == "" or subject is None:
         subject = "Misc"
     deadline = input("When should you finish it: ")
+    try:
+        datetime.strptime(deadline, "%Y-%m-%d")
+    except ValueError:
+        print("Invalid deadline format: please use YYYY-MM-DD format!")
+        return
 
     _add_task(name, deadline, subject)
 
