@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import os
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -58,13 +58,13 @@ def print_events_today():
             start = event['start'].get('date')
         else:
             start = parse_date(start)
-            difference = (start - datetime.utcnow()).total_seconds()
+            difference = (start - datetime.now(timezone.utc)).total_seconds()
             mins = divmod(difference, 60)[0]
             start = start.strftime("%Y-%m-%d, %H:%M:%S")
             if mins < 15 and mins >= 0:
                 reminder = True
 
         if reminder:
-            print(colored(start + event['summary'] + "\t <-- incoming", 'cyan', attrs=['bold']))
+            print(colored(start + " "+ event['summary'] + "\t <-- incoming", 'cyan', attrs=['bold']))
         else:
             print(start, event['summary'])
