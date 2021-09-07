@@ -1,6 +1,7 @@
 import argparse
 from bruin.meal import print_menu_all, print_hour, print_menu_detail_all, Period
 from bruin.calendar_tool import print_events_today
+from bruin.tasks import add_task_from_input, read_tasks_and_print
 
 parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
 
@@ -28,6 +29,14 @@ parser.add_argument(
     help='Print detail menu for [=Breakfast, =Lunch, =Dinner]'
 )
 
+parser.add_argument(
+    "--add",
+    dest='add',
+    action='store_true',
+    default=False,
+    help="Used for tasks: add a new todo."
+)
+
 def main():
     args = parser.parse_args()
     if args.option == "meal":
@@ -44,6 +53,11 @@ def main():
     elif args.option == "calendar":
         print("Reminder: Please import your calendar data into your Google Calendar!\n")
         print_events_today()
+    elif args.option == "tasks":
+        if args.add:
+            add_task_from_input()
+        else:
+            read_tasks_and_print()
     else:
         parser.print_help()
 
