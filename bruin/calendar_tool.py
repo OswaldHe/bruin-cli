@@ -13,6 +13,9 @@ SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 _GOOGLE_SERVICE = None
 
 def _init_google_service():
+    """
+    Initialize google API client with OAuth 2.
+    """
     global _GOOGLE_SERVICE
     if _GOOGLE_SERVICE is not None:
         return
@@ -36,6 +39,9 @@ def _init_google_service():
 
 
 def print_events_today():
+    """
+    Fetch calendar events in 24 hours for google calendar
+    """
     _init_google_service()
     now = datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
     later = (datetime.utcnow() + timedelta(days=1)).isoformat() + 'Z'

@@ -39,6 +39,27 @@ Print today's events/classes
 bruin calendar
 ```
 
+### Tasks
+Print your remaining tasks:
+```sh
+bruin tasks
+```
+
+Add a new task (it will pop several prompts):
+```sh
+bruin task --add
+```
+
+Complete a task and move to review later:
+```sh
+bruin task --complete=[%d]
+```
+
+Terminate a task (or finish your review):
+```sh
+bruin task --terminate=[('t'|'r')(%d)]
+```
+
 ## Troubleshooting
 
 1. *Cannot find certain packages*: Make sure you install Python 3.6 or higher and use it throughout your system.
