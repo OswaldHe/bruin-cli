@@ -16,7 +16,7 @@ dependency_links = [x.strip().replace('git+', '') for x in all_reqs if 'git+' no
 setup(
     name='bruin',
     description="Command line tool made by python for various toolbox used in UCLA",
-    version="0.3.0",
+    version="0.3.1",
     packages=find_packages(),
     install_requires=install_requires,
     python_requires='>=3.6',
