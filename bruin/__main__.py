@@ -1,7 +1,7 @@
 import argparse
 from bruin.meal import print_menu_all, print_hour, print_menu_detail_all, Period
 from bruin.calendar_tool import print_events_today
-from bruin.tasks import add_task_from_input, read_tasks_and_print, terminate_task_by_string, complete_task
+from bruin.tasks import add_task_from_input, read_tasks_and_print, terminate_task_by_string, complete_task, remove_daily_task
 
 parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
 
@@ -60,6 +60,16 @@ parser.add_argument(
     help='Used for tasks: remove a task from the list.'
 )
 
+parser.add_argument(
+    "-r",
+    "--remove",
+    dest='remove',
+    action='store',
+    type=int,
+    default=None,
+    help='Used for tasks: remove a task from the daily list'
+)
+
 def main():
     args = parser.parse_args()
     if args.option == "meal":
@@ -83,6 +93,8 @@ def main():
             complete_task(args.complete)
         elif args.terminate is not None:
             terminate_task_by_string(args.terminate)
+        elif args.remove is not None:
+            remove_daily_task(args.remove)
         else:
             read_tasks_and_print()
     else:
