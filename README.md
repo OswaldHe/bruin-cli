@@ -57,7 +57,12 @@ bruin task --complete=[%d]
 
 Terminate a task (or finish your review):
 ```sh
-bruin task --terminate=[('t'|'r')(%d)]
+bruin task --terminate=[('t'|'r'|'d')(%d)]
+```
+
+Remove a daily recurring tasks:
+```sh
+bruin task --remove=[%d]
 ```
 
 ## Troubleshooting
