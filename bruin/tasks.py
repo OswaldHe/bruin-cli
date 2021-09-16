@@ -50,19 +50,20 @@ def _print_list(task_list : list):
 
     print("")
 
+def remove_completed(obj):
+    today = datetime.now().date()
+    if obj['complete_date'] != '':
+        complete_date = datetime.strptime(obj['complete_date'], '%Y-%m-%d').date()
+        if complete_date == today:
+            return False
+    return True
+
 def _print_daily_task_list(task_list: list):
     """
     Print a list of daily tasks
     Parameters:
         task_list: a list of task objects
     """
-    def remove_completed(obj):
-        today = datetime.now().date()
-        if obj['complete_date'] != '':
-            complete_date = datetime.strptime(obj['complete_date'], '%Y-%m-%d').date()
-            if complete_date == today:
-                return False
-        return True
     
     filtered = filter(remove_completed, task_list)
     filtered_list = list(filtered)
@@ -211,10 +212,11 @@ def _terminate_task(type: str, index: int):
         if type in data:
             task_list = data[type]
             if type == 'daily':
+                task_list_filtered = list(filter(remove_completed, task_list))
                 today = datetime.now().date()
                 date_string = datetime.strftime(today, '%Y-%m-%d')
-                if len(task_list) >= index:
-                    task_list[index-1]['complete_date'] = date_string
+                if len(task_list_filtered) >= index:
+                    task_list_filtered[index-1]['complete_date'] = date_string
                     with open(_TASK_FILE, 'w') as json_file:
                         json.dump(data, json_file)
                     print("Complete a daily task!")
