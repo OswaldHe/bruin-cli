@@ -66,21 +66,31 @@ def _format_output(html: str) -> Dict[str, Dict[str, list]]:
     res_dict = {}
 
     times = soup.find_all('h2')
-    menu_blocks = soup.find_all('div', {'class': "menu-block whole-col"})
+    menu_blocks_raw = soup.find_all('div', {'class': "menu-block"})
+    menu_blocks = []
+    for i in range(len(times)):
+        menu_blocks.append(list())
+    slot = 0
+    for element in menu_blocks_raw:
+        menu_blocks[slot].append(element)
+        if element.next_sibling.next_sibling.name == 'h2' or element.next_sibling.next_sibling.name == 'hr':
+            slot+=1
+
     meal_dict = dict(zip(times, menu_blocks))
     for time, menu_block in meal_dict.items():
         period = time.text
         res_dict[period] = {}
-        restaurants = menu_block.find_all('h3')
-        menu = menu_block.find_all("ul", {"class": "sect-list"})
-        menu_dict = dict(zip(restaurants, menu))
+        for block in menu_block:
+            restaurants = block.find_all('h3')
+            menu = block.find_all("ul", {"class": "sect-list"})
+            menu_dict = dict(zip(restaurants, menu))
 
-        for key, value in menu_dict.items():
-            name = key.text
-            res_dict[period][name] = []
-            dishes = value.find_all('a', {"class": "recipelink"})
-            for link in dishes:
-                res_dict[period][name].append(unescape(link.text))
+            for key, value in menu_dict.items():
+                name = key.text
+                res_dict[period][name] = []
+                dishes = value.find_all('a', {"class": "recipelink"})
+                for link in dishes:
+                    res_dict[period][name].append(unescape(link.text))
     
     return res_dict
 
